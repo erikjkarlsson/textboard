@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title> Messageing service</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page_container">
+        <div class="header">
+            <table class="header_table">
+                <tr class="header_main">
+                    <td class="header_link"><a href="/" class="header_link">Reload</a></td>
+                    <td class="header_link">Test 1</td>
+                    <td class="header_link">Test 2</td>
+                    <td class="header_link">Test 3</td>
+                    <td class="header_link">Test 4  </td>
+                </tr>
+            </table>
+        </div>
+        <div class="window">
+            <div class="reply" width="200px" height="400px">
+                <form method="post" action="/">
+                    <table>
+                        <tr><td id="name">Name: </td>           <td><input class="name" value="Anonymous" type="text" name="reply_name"/></td>    </tr>
+                        <tr><td id="name">Subject: </td>        <td><input class="subject" type="text" name="reply_subject"/></td> </tr>
+                        <tr><td id="name" class="message_">Message: </td>        <td><textarea type="text" name="reply_message"/></textarea></td><td></td> </tr>
+                        <tr><td id="name">Special action: </td> <td><input class="sa" value="None (post)" type="text" name="reply_sa"/></td><td><input class="ext" value="post mode" type="text" name="extra"/></td>     </tr>
+                        <tr><td></td><td><input type="submit" value="post"/></td></tr>
+                    </table>
+                </form>
+            </div>
+
+
+            <div class="replys">
+                {% for item in replys %}
+                {% autoescape false %}
+                    {{ item }}<br><br>
+                {% endautoescape %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+.window{
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+    background-color: #2e3138;
+}
+
+.reply{
+    background-color:  #435e50;
+    color: #ffffff;
+    padding: 10px;
+    border: 2px;
+    border-color: #ffffff;
+    position: fixed;
+    right: -200px;
+    bottom: 30px;
+    box-shadow: 5px 5px #292929;
+    transition: 1s;
+    opacity: 0.8;
+    filter: blur(5px);
+}
+.reply:hover{
+    right: 30px;
+    opacity: 1;
+    filter: None;
+}
+
+.user_reply{
+    top: 10px;
+    background-color: #201c1c;
+    color: #ffffff;
+    padding: 10px;
+    border: 2px;
+    border-color: #ffffff;
+    box-shadow: 5px 5px #292929;
+
+}
+
+#user_reply_header{
+    background-color: #363636;
+    color: black;
+}
+
+textarea{
+    width: 300px;
+    height: 200px;
+    border: None;
+    background-color: #2e3138;
+    color: #ffffff;
+}
+
+.message_{
+    top: 50px;
+    position: absolute;
+}
+.name{
+    width: 300px;
+    border: None;
+    background-color: #2e3138;
+    color: #ffffff;
+}
+.subject{
+    width: 300px;
+    border: None;
+    background-color: #2e3138;
+    color: #ffffff;
+}
+.sa{
+    width: 300px;
+    border: None;
+    background-color: #2e3138;
+    color: #ffffff;
+}
+.ext{
+    width: 100px;
+    border: None;
+    background-color: #2e3138;
+    color: #ffffff;
+
+}
+
+body{
+    background-image: url("comfy1.jpg");
+    font-family: arial;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#h_name{
+    color: #61a661
+
+}
+
+#h_sub{
+    color: #5bd0ea
+}
+
+#h_id{
+    #color: #ab55aa
+}
+
+#user_reply_text{
+    padding: 3px;
+
+
+
+}
+
+.page_container{
+    background-color:  #435e50;
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+
+}
+.replys{
+    background-color:  #435e50;
+    padding-top: 10px;
+}
+.header_main{
+    width: 100%;
+    height: 20px;
+    top: 0px;
+    left: 0px;
+    padding: 0px;
+    position: fixed ;
+    z-index: 1;
+    background-color: #435e50;
+    box-shadow: 2px 2px #292929;
+}
+
+.header, .header_table{
+    width: 100%;
+    text-align: center;
+}
+.header_link{
+    color: #ffffff;
+    text-decoration: None;
+    width: 100px;
+    transition: 1s;
+}
+.header_link:visited{
+    color: #ffffff;
+    text-decoration: None;
+}
+.header_link:hover{
+    color: #00ffff;
+    text-decoration: None;
+}
+.header_link:active{
+    color: #00ffff;
+    text-decoration: None;
+}
+.greentext{
+    color: #00ff00;
+    display: inline;
+    }
