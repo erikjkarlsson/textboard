@@ -8,30 +8,35 @@ app = Flask(__name__)
 
 # Get amount of replys
 def get_current_id():
-    id_file  = open("reply/information/current_id", "r")
-    id       = id_file.read()
-    id_file.close()
-
-    return int(id)
-
+    try:
+        id_file  = open("reply/information/current_id", "r")
+        id       = id_file.read()
+        id_file.close()
+        return int(id)
+    except:
+        print("ERROR: reading reply id (using 0)")
+        return 0
+    
 # Rewrite the amount of replys
 def write_new_id(new_id):
-    id_file = open("reply/information/current_id", "w")
-    id_file.write(str(new_id))
-    id_file.close()
-
-    return int(new_id)
+    try:
+        id_file = open("reply/information/current_id", "w")
+        id_file.write(str(new_id))
+        id_file.close()
+        return int(new_id)
+    except:
+        print("ERROR: writing reply id (using 0)")
+        return 0
 
 def remove_all_posts():
     try:
-        write_new_id(0) # Change amount of posts
-            
+        write_new_id(0) # Change amount of posts            
         return True
     except:
         return False
 
-
 def create_new_reply(
+
         name = "Anonymous",
         subject = "",
         message = None,
@@ -42,7 +47,6 @@ def create_new_reply(
         # update amount of replys
         id = get_current_id()
         write_new_id(id + 1)
-
 
         try:
             f = open("reply/messages/%s"%id, "w")
@@ -56,123 +60,132 @@ def create_new_reply(
             f.close()
             return True
         except:
+            print("ERROR: creating message (none created)")
             return False
 
 def read_replys():
     reply_list = []
-    for reply in range(0, get_current_id()):
-        # Format: name \n subject \n id \n message \n special action
-        f = open("reply/messages/%s"%(str(reply)), "r")
-        reply_list.append(f.read().split("\n"))
-        f.close()
-
-    return reply_list
+    try:
+        for reply in range(0, get_current_id()):
+            # Format: name \n subject \n id \n message \n special action
+            f = open("reply/messages/%s"%(str(reply)), "r")
+            reply_list.append(f.read().split("\n"))
+            f.close()
+        return reply_list
+    except:
+        print("ERROR: reading replys (using empty list)")
+        return []
 
 
 def format_replys(replys):
     formated_replys = []
+    try:
+        for reply in replys:
 
-    for reply in replys:
-
-        name           = base64.b64decode(reply[0]).decode('utf-8')
-        subject        = base64.b64decode(reply[1]).decode('utf-8')
-        id             = base64.b64decode(reply[2]).decode('utf-8')
-        message        = base64.b64decode(reply[3]).decode('utf-8')
-        special_action = base64.b64decode(reply[4]).decode('utf-8')
+            name           = base64.b64decode(reply[0]).decode('utf-8')
+            subject        = base64.b64decode(reply[1]).decode('utf-8')
+            id             = base64.b64decode(reply[2]).decode('utf-8')
+            message        = base64.b64decode(reply[3]).decode('utf-8')
+            special_action = base64.b64decode(reply[4]).decode('utf-8')
 
         
-        bigtext     = False
-        greentext   = False
-        new_message = ""
-
-        # >
-        message = message.replace("&gt;", "\x99")
-        message = message.replace("&#35;", "\x98")
-
-        last_char = '\n'
+            bigtext     = False
+            greentext   = False
+            new_message = ""
         
-        for char in message:
-            try:
-                if (not greentext) and (char == "\x99") and (last_char == "\n"):
-                    # Greentext first char
-                    
-                    new_message += "<span class=\"greentext\">&gt;"
-                    greentext    = True
+            # >
+            message = message.replace("&gt;", "\x99")
+            message = message.replace("&#35;", "\x98")
 
-                elif (char == "\x99"):
-                    # Not greentext but arrow
-                    new_message += "&gt;"
+            last_char = '\n'
+        
+            for char in message:
+                try:
+                    if (not greentext) and (char == "\x99") and (last_char == "\n"):
+                        # Greentext first char
+                        
+                        new_message += "<span class=\"greentext\">&gt;"
+                        greentext    = True
+                        
+                    elif (char == "\x99"):
+                        # Not greentext but arrow
+                        new_message += "&gt;"
 
-                elif (char == "\n"):   
+                    elif (char == "\n"):   
+                        # Add newline
+                        if (greentext):
+                            new_message += "</span>"
+                            greentext    = False
+                        
+                            last_char    = "\n"
+                            new_message += "<br>"
+                        else:
+                            new_message += char
+                            last_char    = char
+                except:
+                    None
+
                     # Add newline
                     if (greentext):
-                        new_message += "</span>"
-                        greentext    = False
-                        
-                    last_char    = "\n"
-                    new_message += "<br>"
-                else:
-                    new_message += char
-                    last_char    = char
-            except:
-                None
+                        new_message += "</div>"
+                        greentext = False
+                        # Add big text
+                    if (bigtext):
+                        new_message += "</h4>"
+                        bigtext = False
 
-        # Add newline
-        if (greentext):
-            new_message += "</div>"
-            greentext = False
-        # Add big text
-        if (bigtext):
-            new_message += "</h4>"
-            bigtext = False
+                        new_message.replace("\x99", "")
+                        new_message.replace("\x98", "")
+                        print(new_message, "\n\n")
+                        formated_replys.append(
+                            """
+                            <div class="user_reply">
+                                <table id="user_reply_header">
+                                    <tr>
+                                        <td id="h_name">%s</td>
+                                        <td id="h_sub"><span id="name_s"></span><b>%s</b></td>
+                                        <td id="h_id"><span id="id_s">No.</span>%s</td>
+                                    </tr>
+                            
+                                    <tr>
+                                        <td><p id="user_reply_text"> %s</p></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            """%(
+                                str(name),
+                                str(subject),
+                                str(id),
+                                str(new_message)))
 
-        new_message.replace("\x99", "")
-        new_message.replace("\x98", "")
-        print(new_message, "\n\n")
-        formated_replys.append(
-            """
-            <div class="user_reply">
-                <table id="user_reply_header">
-                    <tr>
-                        <td id="h_name">%s</td>
-                        <td id="h_sub"><span id="name_s"></span><b>%s</b></td>
-                        <td id="h_id"><span id="id_s">No.</span>%s</td>
-                    </tr>
-                    
-                    <tr>
-                        <td><p id="user_reply_text"> %s</p></td>
-                    </tr>
-                </table>
-            </div>
-            """%(
-
-                str(name),
-                str(subject),
-                str(id),
-                str(new_message)))
-
-    return formated_replys
-
+                    return formated_replys
+    except:
+        print("ERROR: encoding message (using empty list)")
+        return []
+    
 @app.route("/", methods=["POST", "GET"])
 def index():
-    if request.method == "POST":
-        # Get reply information
-        message        = request.form["reply_message"]
-        name           = request.form["reply_name"]
-        subject        = request.form["reply_subject"]
-        special_action = request.form["reply_sa"]
-        
+    try:
+        if request.method == "POST":
+            # Get reply information
+            message        = request.form["reply_message"]
+            name           = request.form["reply_name"]
+            subject        = request.form["reply_subject"]
+            special_action = request.form["reply_sa"]
+            
         if (special_action == "R-ALL"):
             remove_all_posts()
-        
+            
         create_new_reply(name, subject, message, special_action)
 
-    replys = format_replys(read_replys())
+        replys = format_replys(read_replys())
 
-    return render_template("message.html", replys=replys)
+        return render_template("message.html", replys=replys)
+    except:
+        print("ERROR: SUBMITTING MESSAGE")
 
-do80 = false
-
+        
+do80 = False
 if not do80:
     if __name__ == "__main__":
         app.run(host="0.0.0.0")
