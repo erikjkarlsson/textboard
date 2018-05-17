@@ -142,15 +142,15 @@ def format_replys(replys):
         formated_replys.append(
             """
             <div class="user_reply">
-                <table id="user_reply_header">
+                <table class="user_reply_header">
                     <tr>
-                        <td id="h_name">%s</td>
-                        <td id="h_sub"><span id="name_s"></span><b>%s</b></td>
-                        <td id="h_id"><span id="id_s">No.</span>%s</td>
+                        <td class="h_name">%s</td>
+                        <td class="h_sub"><span class="name_s"></span><b>%s</b></td>
+                        <td class="h_id"><span class="id_s">No.</span>%s</td>
                     </tr>
                     
                     <tr>
-                        <td><p id="user_reply_text"> %s</p></td>
+                        <td><p class="user_reply_text"> %s</p></td>
                     </tr>
                 </table>
             </div>

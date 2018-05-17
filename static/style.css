@@ -5,12 +5,10 @@
 
 }
 
-
-
-
-
 .reply{
     background-color: #223a5e;
+    width: 400px;
+    height: 200px;
     color: #ffffff;
     padding: 10px;
     border: 2px;
@@ -47,7 +45,7 @@ tr{ width: 100%;}
     width: 100%;
 }
 
-#name_s, #name_s{
+.name_s, .name_s{
     color: #111111 !important;
     width: auto;
     text-align: center;
@@ -100,24 +98,24 @@ body{
     z-index: 0;
 }
 
-#h_name{
+.h_name{
     color: #61a661;
     width: 30% !important;
 }
 
-#h_sub{
+.h_sub{
     text-align: center !important;
     color: #5bd0ea;
     width: 30%;
 }
 
-#h_id{
+.h_id{
     #color: #ab55aa;
     text-align: right !important;
     width: 30%;
 }
 
-#user_reply_text{
+.user_reply_text{
     padding: 3px;
 
 
