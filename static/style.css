@@ -40,7 +40,7 @@
 
 tr{ width: 100%;}
 
-#user_reply_header{
+.user_reply_header{
     background-color: #363636;
     color: black;
     width: 100%;
