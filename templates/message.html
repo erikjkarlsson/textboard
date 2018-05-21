@@ -1,44 +1,38 @@
 <!DOCTYPE html>
 <html lang="sv">
-<head>
+  <head>
     <meta charset="UTF-8">
     <title> Messageing service</title>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-  
+  </head>
+  <body>
     <div class="page_container">
-      <img src="https://www.gnu.org/graphics/gplv3-127x51.png"></img>
-      <div class="blur_background"></div>
-      <div class="header">
-            <table class="header_table">
-                <tr class="header_main">
-                    <td class="header_link"><a href="/" class="header_link">Reload</a></td>
-                </tr>
+      <!--<img src ="{{ url_for('static', filename='paperclip.png') }}" class="paperclip" alt="paperclip"></img>-->
+      <div class="header_main">
+        <td class="header_link"><a href="/" class="header_link">Reload</a></td>
+      </div>
+
+      <div class="window">
+	<div class="reply">
+          <form method="post" action="/">
+            <table>
+              <tr><td><input class="name" value="Anonymous" type="text" name="reply_name"/></td></tr>
+              <tr><td><textarea name="reply_message">message</textarea></td></tr>
+              <tr><td><input class="sa" value="Bump" type="text" name="reply_sa"/></td></tr>
+              <tr><td><input type="submit" value="post"/></td></tr>
             </table>
-        </div>
-        <div class="window">
-            <div class="reply">
-                <form method="post" action="/">
-                    <table>
-                      <tr><td>Name: </td>           <td><input class="name" value="Anonymous" type="text" name="reply_name"/></td></tr>
-                      <tr><td>Subject: </td>        <td><input class="subject" type="text" name="reply_subject"/></td> </tr>
-                      <tr><td class="message_">Message: </td> <td><textarea name="reply_message"></textarea></td><td></td> </tr>
-                      <tr><td>Special action: </td> <td><input class="sa" value="None (post)" type="text" name="reply_sa"/></td><td><input class="ext" value="post mode" type="text" name="extra"/></td>     </tr>
-                      <tr><td></td><td><input type="submit" value="post"/></td></tr>
-                    </table>
-                </form>
-            </div>
+          </form>
+	</div>
 
 
-            <div class="replys">
-                {% for item in replys %}
-                {% autoescape false %}
-                    {{ item }}<br>
-                {% endautoescape %}
-                {% endfor %}
-            </div>
-        </div>
+	<div class="replys">
+          {% for item in replys %}
+          {% autoescape false %}
+          {{ item }}<br>
+          {% endautoescape %}
+          {% endfor %}
+	</div>
+      </div>
     </div>
-</body>
+  </body>
 </html>

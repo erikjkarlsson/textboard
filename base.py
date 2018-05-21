@@ -4,6 +4,7 @@ import os
 import base64
 import random
 import os
+import time
 
 app = Flask(__name__)
 
@@ -43,7 +44,7 @@ def create_new_reply(
         special_action = None
     ):
 
-    if ( not ((message == None) or (message == "") or (message == "\n"))):
+    if ( not ((message == None) or (message == "") or (message == "\n") or (message == "message"))):
         # update amount of replys
         id = get_current_id()
         write_new_id(id + 1)
@@ -138,13 +139,15 @@ def format_replys(replys):
 
         new_message.replace("\x99", "")
         new_message.replace("\x98", "")
-
+        tt_ime = time.strftime("%H:%M/%d/%m/%Y", time.gmtime())
         formated_replys.append(
             """
             <div class="user_reply">
+
                 <table class="user_reply_header">
                     <tr>
                         <td class="h_name">%s</td>
+                        <td class="h_time">%s</td>
                         <td class="h_sub"><span class="name_s"></span><b>%s</b></td>
                         <td class="h_id"><span class="id_s">No.</span>%s</td>
                     </tr>
@@ -157,6 +160,7 @@ def format_replys(replys):
             """%(
 
                 str(name),
+                str(time),
                 str(subject),
                 str(id),
                 str(new_message)))
@@ -170,7 +174,7 @@ def index():
         # Get reply information
         message        = request.form["reply_message"]
         name           = request.form["reply_name"]
-        subject        = request.form["reply_subject"]
+        subject        = "" # request.form["reply_subject"]
         special_action = request.form["reply_sa"]
         create_new_reply(name, subject, message, special_action)
         
