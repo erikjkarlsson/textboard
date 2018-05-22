@@ -139,24 +139,21 @@ def format_replys(replys):
 
         new_message.replace("\x99", "")
         new_message.replace("\x98", "")
-        tt_ime = time.strftime("%H:%M/%d/%m/%Y", time.gmtime())
+
         formated_replys.append(
             """
-            <div class="user_reply">
-
-                <table class="user_reply_header">
-                    <tr>
-                        <td class="h_name">%s</td>
-                        <td class="h_time">%s</td>
-                        <td class="h_sub"><span class="name_s"></span><b>%s</b></td>
-                        <td class="h_id"><span class="id_s">No.</span>%s</td>
-                    </tr>
-                    
-                    <tr>
-                        <td><p class="user_reply_text"> %s</p></td>
-                    </tr>
-                </table>
-            </div>
+<div class="user_reply">
+  <table class="user_reply_header">
+    <tr>
+      <td class="h_name">%s</td>
+      <td class="h_sub"><span class="name_s"></span><b>%s</b></td>
+      <td class="h_id"><span class="id_s">No.</span>%s</td>
+    </tr>               
+    <tr>
+      <td><p class="user_reply_text"> %s</p></td>
+    </tr>
+  </table>
+</div>
             """%(
 
                 str(name),
