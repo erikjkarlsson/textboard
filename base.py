@@ -157,7 +157,6 @@ def format_replys(replys):
             """%(
 
                 str(name),
-                str(time),
                 str(subject),
                 str(id),
                 str(new_message)))
