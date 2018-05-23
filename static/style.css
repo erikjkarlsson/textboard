@@ -84,11 +84,9 @@ textarea{
 }
 
 body{
-    background-image: url({{ url_for('static', filename='spacestack.png') }});
+    background-image: url("spacestack.png");
     font-family: arial;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-repeat: repeat;
     z-index: 0;
 }
 
