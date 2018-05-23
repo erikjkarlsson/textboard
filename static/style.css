@@ -3,8 +3,6 @@
     margin-right: auto;
     width: 80%;
     height: 100%;
-    border-left: 1px solid #9e9e9e;
-    border-right: 1px solid #9e9e9e;
     padding: 10px;
 
 }
@@ -26,17 +24,18 @@
 .user_reply{
     top: 10px;
     color: #eeeeee;
-    background-color: #eeeeee;
+    background-color: #111111;
+    opacity: 0.8;
     position: relative;
 }
 
 tr{ width: 100%;}
 
 .user_reply_header{
-    background-color: #eeeeee;
-    color: #191919;
+    background-color: #111111;
+    color: #ccac00;
     width: 100%;
-    border-top: 1px solid #9e9e9e;
+    border-top: 6px solid #653800;
 }
 
 
@@ -44,10 +43,10 @@ textarea{
     width: 100%;
     height: 200px;
     border: None;
-    border: 1px solid #9e9e9e; 
-    background-color: #eeeeee;
+    opacity: .9;
+    background-color: #111111;
     position: relative;
-    color: #191919;
+    color: #ccac00;
 }
 
 .message_{
@@ -57,34 +56,35 @@ textarea{
 .name{
     width: 100%;
     border: None;
-    border: 1px solid #9e9e9e; 
-    background-color: #eeeeee;
-    color: #191919;
+    opacity: .9;
+    background-color: #111111;
+    color: #ccac00;
 }
 .subject{
     width: 100%;
     border: None;
-    border: 1px solid #9e9e9e;
-    background-color: #eeeeee;
-    color: #191919;
+    opacity: .9;
+    background-color: #111111;
+    color: #ccac00;
 }
 .sa{
     width: 100%;
     border: None;
-    border: 1px solid #9e9e9e;
-    background-color: #eeeeee;
-    color: #191919;
+    opacity: .9;
+    background-color: #111111;
+    color: #ccac00;
 }
 .ext{
     width: 100%;
     border: None;
-    background-color: #eeeeee;
-    color: #191919;
+    opacity: .9;
+    background-color: #111111;
+    color: #ccac00;
 
 }
 
 body{
-    background-color: #eeeeee;
+    background-image: url({{ url_for('static', filename='spacestack.png') }});
     font-family: arial;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -117,9 +117,9 @@ table{
     padding: 0px;
     position: fixed;
     z-index: 1;
-    background-color: #eeeeee;
-    border: 1px solid #9e9e9e;
-    color: #191919;
+    background-color: #111111;
+    border: 1px solid #ccac00;
+    color: #ccac00;
     left: 0px;
 
 }
@@ -127,21 +127,21 @@ table{
 
 
 .header_link{
-    color: #191919;
+    color: #ccac00;
     text-decoration: None;
     width: 100px;
     transition: 1s;
 }
 .header_link:visited{
-    color: #191919;
+    color: #ccac00;
     text-decoration: None;
 }
 .header_link:hover{
-    color: #191919;
+    color: #ccac00;
     text-decoration: None;
 }
 .header_link:active{
-    color: #191919;
+    color: #ccac00;
     text-decoration: None;
 }
 .greentext{
