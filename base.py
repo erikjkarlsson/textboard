@@ -177,7 +177,15 @@ def index():
         if (special_action == "R-ALL"):
             print("ADMIN ACTION: REMOVING ALL POSTS")
             remove_all_posts()
-            
+
+        if str(special_action[0] + special_action[1]) == "DA": #DA:123
+            try:
+                rem = int(special_action.split(":")[1])
+                print("ADMIN ACTION: REMOVING POSTS UP TO %d"%(rem))
+                if ((rem <= get_current_id()) and (rem >= 0)):
+                    write_new_id(rem)
+            except:
+                print("ADMIN ACTION FAILED")
     replys = format_replys(read_replys())
     return render_template("message.html", replys=replys)
 
