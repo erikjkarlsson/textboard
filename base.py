@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+from flask_ipban import IpBan
+import datetime
 from html import escape
 import os
 import base64
@@ -7,8 +9,13 @@ import os
 import time
 
 app = Flask(__name__)
-
+ip_ban = IpBan(ban_seconds=200)
+ip_ban.init_app(app)
 # Get amount of replys
+
+
+ip_post_count = {}
+ip_ban_time   = {}
 def get_current_id():
     try:
         id_file  = open("reply/information/current_id", "r")
@@ -44,7 +51,10 @@ def create_new_reply(
         special_action = None
     ):
 
-    if ( not ((message == None) or (message == "") or (message == "\n") or (message == "message"))):
+    if ( not ((message == None) or
+              (message == "")   or
+              (message == "\n") or
+              (message == "message"))):
         # update amount of replys
         id = get_current_id()
         write_new_id(id + 1)
@@ -163,9 +173,25 @@ def format_replys(replys):
 
     return formated_replys
 
+def permaban(ip):
+    # Perma ban ip
+    ip_ban.block(ip, permanent=True)
+
+def unban(ip):
+    # Unban a perma ban
+    ip_ban.remove(ip)
+
 @app.route("/", methods=["POST", "GET"])
 def index():
-    
+    print(ip_post_count)
+    print(ip_ban_time)
+
+    if request.environ['REMOTE_ADDR'] in ip_ban_time:
+        if (datetime.date.today() <= ip_ban_time[request.environ['REMOTE_ADDR']]):
+            return render_template("internal_error.html")
+        else:
+            ip_ban_time.pop(request.environ['REMOTE_ADDR'])
+        
     if request.method == "POST":
         # Get reply information
         message        = request.form["reply_message"]
@@ -173,7 +199,19 @@ def index():
         subject        = "" # request.form["reply_subject"]
         special_action = request.form["reply_sa"]
         create_new_reply(name, subject, message, special_action)
-        
+        if (special_action != "SAFE"):
+            
+            if not request.environ['REMOTE_ADDR'] in ip_post_count:
+                ip_post_count.update({request.environ['REMOTE_ADDR'] : 1})
+            else:
+                if (ip_post_count[request.environ['REMOTE_ADDR']] >= 5):
+                    ip_post_count.pop(request.environ['REMOTE_ADDR'])
+                    ip_ban_time.update({request.environ['REMOTE_ADDR'] :
+                                        datetime.date.today() + datetime.timedelta(minutes=10)})
+                else:
+                    ip_post_count.update({request.environ['REMOTE_ADDR'] :                                       
+                                          ip_post_count[request.environ['REMOTE_ADDR']] + 1})
+
         if (special_action == "R-ALL"):
             print("ADMIN ACTION: REMOVING ALL POSTS")
             remove_all_posts()
